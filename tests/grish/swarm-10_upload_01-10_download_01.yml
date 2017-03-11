@@ -1,6 +1,6 @@
 name: Each of 10 nodes upload one file, download another
 config:
-  nodes: 11
+  nodes: 10
   selector: run=go-ipfs-stress
   times: 3
   expected:
@@ -14,7 +14,7 @@ steps:
     on_node: 1
     cmd: "head -c 5000000 /dev/urandom | base64 > /tmp/file.txt
           && md5sum /tmp/file.txt | cut -d ' ' -f 1
-          && ips add -q /tmp/file.txt"
+          && ipfs add -q /tmp/file.txt"
     timeout: 0
     outputs:
     - line: 0
@@ -26,7 +26,7 @@ steps:
     on_node: 2
     cmd: "head -c 5000000 /dev/urandom | base64 > /tmp/file.txt
           && md5sum /tmp/file.txt | cut -d ' ' -f 1
-          && ips add -q /tmp/file.txt"
+          && ipfs add -q /tmp/file.txt"
     timeout: 0
     outputs:
     - line: 0
@@ -38,7 +38,7 @@ steps:
     on_node: 3
     cmd: "head -c 5000000 /dev/urandom | base64 > /tmp/file.txt
           && md5sum /tmp/file.txt | cut -d ' ' -f 1
-          && ips add -q /tmp/file.txt"
+          && ipfs add -q /tmp/file.txt"
     timeout: 0
     outputs:
     - line: 0
@@ -50,7 +50,7 @@ steps:
     on_node: 4
     cmd: "head -c 5000000 /dev/urandom | base64 > /tmp/file.txt
           && md5sum /tmp/file.txt | cut -d ' ' -f 1
-          && ips add -q /tmp/file.txt"
+          && ipfs add -q /tmp/file.txt"
     timeout: 0
     outputs:
     - line: 0
@@ -62,7 +62,7 @@ steps:
     on_node: 5
     cmd: "head -c 5000000 /dev/urandom | base64 > /tmp/file.txt
           && md5sum /tmp/file.txt | cut -d ' ' -f 1
-          && ips add -q /tmp/file.txt"
+          && ipfs add -q /tmp/file.txt"
     timeout: 0
     outputs:
     - line: 0
@@ -74,7 +74,7 @@ steps:
     on_node: 6
     cmd: "head -c 5000000 /dev/urandom | base64 > /tmp/file.txt
           && md5sum /tmp/file.txt | cut -d ' ' -f 1
-          && ips add -q /tmp/file.txt"
+          && ipfs add -q /tmp/file.txt"
     timeout: 0
     outputs:
     - line: 0
@@ -86,7 +86,7 @@ steps:
     on_node: 7
     cmd: "head -c 5000000 /dev/urandom | base64 > /tmp/file.txt
           && md5sum /tmp/file.txt | cut -d ' ' -f 1
-          && ips add -q /tmp/file.txt"
+          && ipfs add -q /tmp/file.txt"
     timeout: 0
     outputs:
     - line: 0
@@ -98,7 +98,7 @@ steps:
     on_node: 8
     cmd: "head -c 5000000 /dev/urandom | base64 > /tmp/file.txt
           && md5sum /tmp/file.txt | cut -d ' ' -f 1
-          && ips add -q /tmp/file.txt"
+          && ipfs add -q /tmp/file.txt"
     timeout: 0
     outputs:
     - line: 0
@@ -110,7 +110,7 @@ steps:
     on_node: 9
     cmd: "head -c 5000000 /dev/urandom | base64 > /tmp/file.txt
           && md5sum /tmp/file.txt | cut -d ' ' -f 1
-          && ips add -q /tmp/file.txt"
+          && ipfs add -q /tmp/file.txt"
     timeout: 0
     outputs:
     - line: 0
@@ -122,13 +122,24 @@ steps:
     on_node: 10
     cmd: "head -c 5000000 /dev/urandom | base64 > /tmp/file.txt
           && md5sum /tmp/file.txt | cut -d ' ' -f 1
-          && ips add -q /tmp/file.txt"
+          && ipfs add -q /tmp/file.txt"
     timeout: 0
     outputs:
     - line: 0
       save_to: FILE_2
     - line: 1
       save_to: HASH_2
+
+  - name: Node 1 cat FILE_10
+    on_node: 1
+    inputs:
+      - HASH_10
+      - FILE_10
+    cmd: "ipfs cat $HASH_10 | md5sum | cut -d ' ' -f 1"
+    timeout: 25
+    assertions:
+      - line: 0
+        should_be_equal_to: FILE_10
 
   - name: Node 2 cat FILE_1
     on_node: 2
@@ -228,15 +239,4 @@ steps:
     assertions:
       - line: 0
         should_be_equal_to: FILE_9
-
-  - name: Node 11 cat FILE_10
-    on_node: 11
-    inputs:
-      - HASH_10
-      - FILE_10
-    cmd: "ipfs cat $HASH_10 | md5sum | cut -d ' ' -f 1"
-    timeout: 25
-    assertions:
-      - line: 0
-        should_be_equal_to: FILE_10
 
