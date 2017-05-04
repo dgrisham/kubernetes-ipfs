@@ -1,0 +1,116 @@
+name: 2-peer cluster -- 1st user uploads file, 2nd downloads, both output bitswap stats
+config:
+    nodes: 2
+    selector: run=go-ipfs-stress
+    times: 1
+    expected:
+        successes: 1
+        failures: 0
+        timeouts: 0
+steps:
+
+    # Set up initial topology
+    # -----------------------
+
+    ### Disconnect from all peers
+
+  - name: Remove all bootstrap peers from nodes
+    on_node: 1
+    end_node: 2
+    cmd: "for node in $(ipfs bootstrap list); do
+            ipfs bootstrap rm $node;
+          done"
+    timeout: 0
+
+  - name: Disconnect all current peers
+    on_node: 1
+    end_node: 2
+    cmd: "for node in $(ipfs swarm peers); do
+            ipfs swarm disconnect $node;
+          done"
+    timeout: 0
+
+    ### Connect nodes 1 and 2
+
+  - name: Get connection info from node 1
+    on_node: 1
+    cmd: "ipfs id -f '<addrs>' | grep 172"
+    outputs:
+      - line: 0
+        save_to: LANADDR
+
+  - name: Connect to node 1 from node 2
+    on_node: 2
+    inputs:
+      - LANADDR
+    cmd: "ipfs swarm connect $LANADDR"
+
+    # Add/cat the file
+    # ----------------
+
+  - name: Add 1KB file, get peer ID
+    on_node: 1
+    cmd: "head -c 1000 /dev/urandom | base64 > /tmp/file.txt
+       && md5sum /tmp/file.txt | cut -d ' ' -f 1
+       && ipfs add -q /tmp/file.txt
+       && ipfs config Identity.PeerID"
+    timeout: 0
+    outputs:
+      - line: 0
+        save_to: FILE
+      - line: 1
+        save_to: HASH
+      - line: 2
+        save_to: PEER1
+
+  - name: Cat file
+    on_node: 2
+    inputs:
+      - FILE
+      - HASH
+    cmd: "ipfs cat $HASH | md5sum | cut -d ' ' -f 1"
+    timeout: 10
+    assertions:
+      - line: 0
+        should_be_equal_to: FILE
+
+  - name: Get peer ID
+    on_node: 2
+    inputs:
+      - FILE
+      - HASH
+    cmd: "ipfs config Identity.PeerID"
+    timeout: 10
+    outputs:
+      - line: 0
+        save_to: PEER2
+
+    # Gather bitswap metrics
+    # ----------------------
+
+  - name: Peer1 output Peer2 bitswap
+    on_node: 1
+    inputs:
+      - PEER2
+    cmd: "ipfs bitswap ledger $PEER2"
+    timeout: 5
+    outputs:
+      - line: 0
+      - line: 1
+      - line: 2
+      - line: 3
+      - line: 4
+
+  - name: Peer2 output Peer1 bitswap
+    on_node: 2
+    inputs:
+      - PEER1
+    cmd: "ipfs bitswap ledger $PEER1"
+    timeout: 5
+    outputs:
+      - line: 0
+      - line: 1
+      - line: 2
+      - line: 3
+      - line: 4
+

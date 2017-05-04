@@ -1,0 +1,81 @@
+name: Peer 1 adds file, peer 2 downloads, both output bitswap stats
+config:
+  nodes: 2
+  selector: run=go-ipfs-stress
+  times: 1
+  expected:
+      successes: 1
+      failures: 0
+      timeouts: 0
+steps:
+
+    # Get peer IDs
+    # ------------
+
+  - name: Peer 1 ID
+    on_node: 1
+    cmd: "ipfs config Identity.PeerID"
+    outputs:
+      - line: 0
+        save_to: PID1
+
+  - name: Peer 2 ID
+    on_node: 2
+    cmd: "ipfs config Identity.PeerID"
+    outputs:
+      - line: 0
+        save_to: PID2
+
+    # Exchange data
+    # -------------
+
+  - name: Node 1 add file
+    on_node: 1
+    cmd: "head -c 10 /dev/urandom | base64 > /tmp/file.txt
+       && cat /tmp/file.txt && ipfs add -q /tmp/file.txt"
+    timeout: 0
+    outputs: 
+    - line: 0
+      save_to: FILE
+    - line: 1
+      save_to: HASH
+
+  - name: Node 2 cat file
+    on_node: 2
+    inputs:
+      - FILE
+      - HASH
+    cmd: "ipfs cat $HASH"
+    timeout: 10
+    assertions:
+    - line: 0
+      should_be_equal_to: FILE
+
+    # output Bitswap ledgers
+    # ----------------------
+
+  - name: Node 1 output Bitswap ledger
+    on_node: 1
+    inputs:
+      - PID2
+    cmd: "ipfs bitswap ledger $PID2"
+    timeout: 5
+    outputs:
+      - line: 0
+      - line: 1
+      - line: 2
+      - line: 3
+      - line: 4
+
+  - name: Node 2 output Bitswap ledger
+    on_node: 2
+    inputs:
+      - PID1
+    cmd: "ipfs bitswap ledger $PID1"
+    timeout: 5
+    outputs:
+      - line: 0
+      - line: 1
+      - line: 2
+      - line: 3
+      - line: 4

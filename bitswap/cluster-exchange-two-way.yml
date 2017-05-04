@@ -1,0 +1,142 @@
+name: 2-peer cluster -- Users exchange files, both output bitswap stats
+config:
+    nodes: 2
+    selector: run=go-ipfs-stress
+    times: 1
+    expected:
+        successes: 2
+        failures: 0
+        timeouts: 0
+steps:
+
+    # Set up initial topology
+    # -----------------------
+
+    ### Disconnect from all peers
+
+  - name: Remove all bootstrap peers from nodes
+    on_node: 1
+    end_node: 2
+    cmd: "for node in $(ipfs bootstrap list); do
+            ipfs bootstrap rm $node;
+          done"
+    timeout: 0
+
+  - name: Disconnect all current peers
+    on_node: 1
+    end_node: 2
+    cmd: "for node in $(ipfs swarm peers); do
+            ipfs swarm disconnect $node;
+          done"
+    timeout: 0
+
+    ### Connect nodes 1 and 2
+
+  - name: Get connection info from node 1
+    on_node: 1
+    cmd: "ipfs id -f '<addrs>' | grep 172"
+    outputs:
+      - line: 0
+        save_to: LANADDR
+
+  - name: Connect to node 1 from node 2
+    on_node: 2
+    inputs:
+      - LANADDR
+    cmd: "ipfs swarm connect $LANADDR"
+
+    # Add/cat the file
+    # ----------------
+
+  - name: Node 1 add 1KB file, get peer ID
+    on_node: 1
+    cmd: "head -c 1000 /dev/urandom | base64 > /tmp/file.txt
+       && md5sum /tmp/file.txt | cut -d ' ' -f 1
+       && ipfs add -q /tmp/file.txt
+       && ipfs config Identity.PeerID"
+    timeout: 0
+    outputs:
+      - line: 0
+        save_to: FILE1
+      - line: 1
+        save_to: HASH1
+      - line: 2
+        save_to: PEER1
+
+  - name: Node 2 add 1KB file, get peer ID
+    on_node: 2
+    cmd: "head -c 1000 /dev/urandom | base64 > /tmp/file.txt
+       && md5sum /tmp/file.txt | cut -d ' ' -f 1
+       && ipfs add -q /tmp/file.txt
+       && ipfs config Identity.PeerID"
+    timeout: 0
+    outputs:
+      - line: 0
+        save_to: FILE2
+      - line: 1
+        save_to: HASH2
+      - line: 2
+        save_to: PEER2
+
+  - name: Node 1 cat file 2
+    on_node: 1
+    inputs:
+      - FILE2
+      - HASH2
+    cmd: "ipfs cat $HASH2 | md5sum | cut -d ' ' -f 1"
+    timeout: 10
+    assertions:
+      - line: 0
+        should_be_equal_to: FILE2
+
+  - name: Node 2 cat file 1
+    on_node: 2
+    inputs:
+      - FILE1
+      - HASH1
+    cmd: "ipfs cat $HASH1 | md5sum | cut -d ' ' -f 1"
+    timeout: 10
+    assertions:
+      - line: 0
+        should_be_equal_to: FILE1
+
+  - name: Node 2 get peer ID
+    on_node: 2
+    inputs:
+      - FILE
+      - HASH
+    cmd: "ipfs config Identity.PeerID"
+    timeout: 10
+    outputs:
+      - line: 0
+        save_to: PEER2
+
+    # Gather bitswap metrics
+    # ----------------------
+
+  - name: Peer 1 output Peer 2 bitswap ledger
+    on_node: 1
+    inputs:
+      - PEER2
+    cmd: "ipfs bitswap ledger $PEER2"
+    timeout: 5
+    outputs:
+      - line: 0
+      - line: 1
+      - line: 2
+      - line: 3
+      - line: 4
+
+  - name: Peer 2 output Peer 1 bitswap ledger
+    on_node: 2
+    inputs:
+      - PEER1
+    cmd: "ipfs bitswap ledger $PEER1"
+    timeout: 5
+    outputs:
+      - line: 0
+      - line: 1
+      - line: 2
+      - line: 3
+      - line: 4
+

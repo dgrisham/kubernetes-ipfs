@@ -170,10 +170,10 @@ func main() {
 }
 
 func handleStep(pods GetPodsOutput, step *Step, summary *Summary, env []string) []string {
-	color.Blue("### Running step %s on nodes %d to %d", step.Name, step.OnNode, step.EndNode)
+	color.Yellow("### Running step %s on nodes %d to %d", step.Name, step.OnNode, step.EndNode)
 	if len(step.Inputs) != 0 {
 		for _, input := range step.Inputs {
-			color.Blue("### Getting variable " + input)
+			color.Yellow("### Getting variable " + input)
 		}
 	}
 	color.Magenta("$ %s", step.CMD)
