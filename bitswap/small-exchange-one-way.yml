@@ -54,11 +54,11 @@ steps:
     # output Bitswap ledgers
     # ----------------------
 
-  - name: Node 1 output Bitswap ledger
-    on_node: 1
+  - name: Node 2 output Bitswap ledger
+    on_node: 2
     inputs:
-      - PID2
-    cmd: "ipfs bitswap ledger $PID2"
+      - PID1
+    cmd: "ipfs bitswap ledger $PID1"
     timeout: 5
     outputs:
       - line: 0
@@ -67,11 +67,11 @@ steps:
       - line: 3
       - line: 4
 
-  - name: Node 2 output Bitswap ledger
-    on_node: 2
+  - name: Node 1 output Bitswap ledger
+    on_node: 1
     inputs:
-      - PID1
-    cmd: "ipfs bitswap ledger $PID1"
+      - PID2
+    cmd: "ipfs bitswap ledger $PID2"
     timeout: 5
     outputs:
       - line: 0

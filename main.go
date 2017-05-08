@@ -36,8 +36,9 @@ type Summary struct {
 
 // Output is
 type Output struct {
-	Line   int    `yaml:"line"`
-	SaveTo string `yaml:"save_to"`
+	Line         int    `yaml:"line"`
+	SaveTo       string `yaml:"save_to"`
+	SaveToFile   string `yaml:"save_to_file"`
 }
 
 // Assertion is
