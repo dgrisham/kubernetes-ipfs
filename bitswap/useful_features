@@ -1,0 +1,4 @@
+-   'step loops'
+    -   idea: loop over one or more steps with an iteration value of some sort
+    -   use case: two nodes exchange data back and forth for many iterations,
+        record ledgers at each step

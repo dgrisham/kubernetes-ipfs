@@ -60,7 +60,7 @@ steps:
       - PID1
     cmd: "ipfs bitswap ledger $PID1"
     timeout: 5
-    write_to_file: 'test'
+    write_to_file: '/dev/stdout'
 
   - name: Node 1 output Bitswap ledger
     on_node: 1
@@ -68,4 +68,5 @@ steps:
       - PID2
     cmd: "ipfs bitswap ledger $PID2"
     timeout: 5
-    write_to_file: 'test'
+    write_to_file: '/dev/stdout'
+

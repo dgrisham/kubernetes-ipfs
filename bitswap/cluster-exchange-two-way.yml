@@ -120,12 +120,7 @@ steps:
       - PEER2
     cmd: "ipfs bitswap ledger $PEER2"
     timeout: 5
-    outputs:
-      - line: 0
-      - line: 1
-      - line: 2
-      - line: 3
-      - line: 4
+    write_to_file: /dev/stdout
 
   - name: Peer 2 output Peer 1 bitswap ledger
     on_node: 2
@@ -133,10 +128,5 @@ steps:
       - PEER1
     cmd: "ipfs bitswap ledger $PEER1"
     timeout: 5
-    outputs:
-      - line: 0
-      - line: 1
-      - line: 2
-      - line: 3
-      - line: 4
+    write_to_file: /dev/stdout
 
