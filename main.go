@@ -319,7 +319,6 @@ func main() {
 
 	// combine params in config with CLI input (CLI input has priority)
 	testConfig.addParams(cliParams)
-
 	debug("## Loading " + filePath)
 
 	test, err := loadTest(filePath, testConfig)
