@@ -1,0 +1,106 @@
+name: One node downloads different DAG subset from 2 nodes
+config:
+    nodes: 5
+    selector: app=go-ipfs-raw
+    times: 1
+    expected:
+        successes: 1
+        failures: 0
+        timeouts: 0
+
+steps:
+
+  - name: Node 1 add 200MB file
+    on_node: 1
+    cmd: "head -c 200000000 /dev/urandom | base64 > /tmp/file.txt
+       && md5sum /tmp/file.txt | cut -d ' ' -f 1
+       && ipfs add -q /tmp/file.txt | tee >(ipfs object links | wc -l)"
+    timeout: 0
+    outputs:
+      - line: 0
+        save_to: FILE
+      - line: 1
+        save_to: HASH
+      - line: 2
+        save_to: NUM_REFS
+
+  - name: Split up child block hashes into 2 subsets
+    on_node: 1
+    inputs:
+      - HASH
+      - NUM_REFS
+    cmd: "split -l$(($NUM_REFS / 2)) <(ipfs object links $HASH | awk '{print $1}')
+       && cat xaa | tr '\\n' ' ' && echo ''
+       && cat xab | tr '\\n' ' '"
+    timeout: 30
+    outputs:
+      - line: 0
+        save_to: HASHSET1
+      - line: 1
+        save_to: HASHSET2
+
+  - name: Node 2 download HASHSET1
+    on_node: 2
+    inputs:
+      - HASHSET1
+    cmd: "for hash in `cat <(echo $HASHSET1 | tr ' ' '\\n')`; do
+            ipfs get $hash;
+          done"
+
+  - name: Node 3 download HASHSET2
+    on_node: 3
+    inputs:
+      - HASHSET2
+    cmd: "for hash in `cat <(echo $HASHSET2 | tr ' ' '\\n')`; do
+            ipfs get $hash;
+          done"
+
+  - name: Nodes 3 list files (so Node 4 can find links later)
+    on_node: 3
+    inputs:
+      - HASH
+    cmd: "ipfs object links $HASH"
+
+  - name: Node 1 unpin entire file and GC
+    on_node: 1
+    inputs:
+      - HASH
+    cmd: "ipfs pin rm $HASH && ipfs repo gc"
+
+  - name: Node 4 downloads entire file
+    on_node: 4
+    inputs:
+      - FILE
+      - HASH
+    cmd: "ipfs cat $HASH | md5sum | cut -d ' ' -f 1"
+    timeout: 100
+    assertions:
+      - line: 0
+        should_be_equal_to: FILE
+
+  # Take Bitswap stats
+  # ------------------
+
+  - name: Node 2 output peer ID
+    on_node: 2
+    cmd: "ipfs config Identity.PeerID"
+    outputs:
+      - line: 0
+        save_to: PID2
+
+  - name: Node 3 output peer ID
+    on_node: 3
+    cmd: "ipfs config Identity.PeerID"
+    outputs:
+      - line: 0
+        save_to: PID3
+
+  - name: Node 4 output bitswap ledgers
+    on_node: 4
+    inputs:
+      - PID2
+      - PID3
+    cmd: "ipfs bitswap ledger $PID2
+       && ipfs bitswap ledger $PID3"
+    write_to_file: /dev/stdout
+

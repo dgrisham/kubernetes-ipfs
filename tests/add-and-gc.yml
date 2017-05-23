@@ -1,8 +1,10 @@
 name: Add and GC
+parameters:
+    T: 10
 config:
   selector: run=go-ipfs-stress
   nodes: 1
-  times: 10
+  times: '%T%'
   expected:
       successes: 10
       failures: 0

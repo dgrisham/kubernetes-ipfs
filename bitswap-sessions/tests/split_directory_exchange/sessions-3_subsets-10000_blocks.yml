@@ -1,0 +1,164 @@
+name: One node downloads different DAG subset from 2 nodes
+config:
+    nodes: 5
+    selector: app=go-ipfs-bitswap-sessions
+    times: 1
+    expected:
+        successes: 0
+        failures: 0
+        timeouts: 0
+
+steps:
+
+    # Set up topology
+    # ---------------
+
+    ### Disconnect all
+
+  - name: Remove all bootstrap peers from every node
+    on_node: 1
+    end_node: 5
+    cmd: for node in $(ipfs bootstrap list); do ipfs bootstrap rm $node; done;
+    timeout: 0
+
+  - name: Remove all normal peers from every node
+    on_node: 1
+    end_node: 5
+    cmd: for node in $(ipfs swarm peers); do ipfs swarm disconnect $node; done;
+    timeout: 0
+
+    ### Get LAN addrs
+
+  - name: Get connection info from node 1
+    on_node: 1
+    cmd: ipfs id -f "<addrs>" | grep 172
+    outputs:
+    - line: 0
+      save_to: LANADDR1
+
+  - name: Get connection info from node 2
+    on_node: 2
+    cmd: ipfs id -f "<addrs>" | grep 172
+    outputs:
+    - line: 0
+      save_to: LANADDR2
+
+  - name: Get connection info from node 3
+    on_node: 3
+    cmd: ipfs id -f "<addrs>" | grep 172
+    outputs:
+    - line: 0
+      save_to: LANADDR3
+
+  - name: Get connection info from node 4
+    on_node: 4
+    cmd: ipfs id -f "<addrs>" | grep 172
+    outputs:
+    - line: 0
+      save_to: LANADDR4
+
+    ### Establish connections between all peers
+
+  - name: Connect to node 1 from every other node
+    on_node: 2
+    end_node: 5
+    inputs:
+      - LANADDR1
+    cmd: ipfs swarm connect $LANADDR1
+
+  - name: Connect to node 2 from every other node
+    on_node: 3
+    end_node: 5
+    inputs:
+      - LANADDR2
+    cmd: ipfs swarm connect $LANADDR2
+
+  - name: Connect to node 3 from every other node
+    on_node: 4
+    end_node: 5
+    inputs:
+      - LANADDR3
+    cmd: ipfs swarm connect $LANADDR3
+
+  - name: Connect to node 4 from every other node
+    on_node: 5
+    inputs:
+      - LANADDR4
+    cmd: ipfs swarm connect $LANADDR4
+
+    # Test
+    # ----
+
+    ### Add directory with a bunch of small files
+
+  - name: Node 1 add 200MB file
+    on_node: 1
+    cmd: "export DIR=/tmp/ipfs
+       && rm -rf $DIR && mkdir $DIR
+       && for i in {1..100}; do
+            head -c 100 /dev/urandom | base64 > $DIR/file$i.txt;
+          done
+       && ipfs add -rq $DIR | tail -n1 |  tee >(ipfs object links | wc -l)"
+    timeout: 0
+    outputs:
+      - line: 0
+        save_to: HASH
+      - line: 1
+        save_to: NUM_REFS
+
+   ### Two nodes each download 1/2 of files
+
+  - name: Split up child block hashes into 2 subsets
+    on_node: 1
+    inputs:
+      - HASH
+      - NUM_REFS
+    cmd: "split -l$(($NUM_REFS / 2)) <(ipfs object links $HASH | awk '{print $1}')
+       && cat xaa | tr '\\n' ' ' && echo ''
+       && cat xab | tr '\\n' ' '"
+    timeout: 30
+    outputs:
+      - line: 0
+        save_to: HASHSET1
+      - line: 1
+        save_to: HASHSET2
+
+  - name: Node 2 download HASHSET1
+    on_node: 2
+    inputs:
+      - HASHSET1
+    cmd: "for hash in `cat <(echo $HASHSET1 | tr ' ' '\\n')`; do
+            ipfs pin add $hash;
+          done"
+
+  - name: Node 3 download HASHSET2
+    on_node: 3
+    inputs:
+      - HASHSET2
+    cmd: "for hash in `cat <(echo $HASHSET2 | tr ' ' '\\n')`; do
+            ipfs pin add $hash;
+          done"
+
+  - name: Nodes 3 list files (so Node 4 can find links later)
+    on_node: 3
+    inputs:
+      - HASH
+    cmd: "ipfs pin add --recursive=false $HASH"
+
+    ### Node who original added directory drops it
+
+  - name: Node 1 unpin entire file and GC
+    on_node: 1
+    inputs:
+      - HASH
+    cmd: "ipfs pin rm $HASH && ipfs repo gc"
+
+    ### Another node downloads entire directory
+
+  - name: Node 5 downloads entire dir
+    on_node: 5
+    inputs:
+      - HASH
+    cmd: "ipfs pin add $HASH"
+    timeout: 100
+    write_to_file: /dev/stdout

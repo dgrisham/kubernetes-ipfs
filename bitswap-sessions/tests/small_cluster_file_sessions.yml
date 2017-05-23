@@ -1,7 +1,7 @@
 name: One node downloads different DAG subset from 2 nodes
 config:
     nodes: 5
-    selector: run=go-ipfs-stress
+    selector: app=go-ipfs-bitswap-sessions
     times: 1
     expected:
         successes: 1
