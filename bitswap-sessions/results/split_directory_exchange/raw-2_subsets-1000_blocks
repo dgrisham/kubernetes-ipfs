@@ -1,0 +1,51 @@
+pinned QmWoKfqGXUHL52iQXS58XBZnP22KFkGJeSM8GK8Zo3g8Ym recursively
+
+real	0m2.318s
+user	0m0.033s
+sys	0m0.013s
+
+Node 1
+======
+
+Bandwidth
+TotalIn: 6.5 MB
+TotalOut: 7.2 MB
+RateIn: 55 kB/s
+RateOut: 63 kB/s
+
+Node 2
+======
+
+Bandwidth
+TotalIn: 7.3 MB
+TotalOut: 8.1 MB
+RateIn: 51 kB/s
+RateOut: 61 kB/s
+
+Node 3
+======
+
+Bandwidth
+TotalIn: 5.8 MB
+TotalOut: 6.0 MB
+RateIn: 66 kB/s
+RateOut: 87 kB/s
+
+Node 4
+======
+
+Bandwidth
+TotalIn: 4.1 MB
+TotalOut: 3.7 MB
+RateIn: 58 kB/s
+RateOut: 56 kB/s
+
+Node 5
+======
+
+Bandwidth
+TotalIn: 8.2 MB
+TotalOut: 7.1 MB
+RateIn: 286 kB/s
+RateOut: 260 kB/s
+

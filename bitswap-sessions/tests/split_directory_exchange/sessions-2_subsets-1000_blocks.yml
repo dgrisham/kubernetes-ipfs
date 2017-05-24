@@ -1,7 +1,7 @@
 name: One node downloads different DAG subset from 2 nodes
 config:
     nodes: 5
-    selector: app=go-ipfs-raw
+    selector: app=go-ipfs-bitswap-sessions
     times: 1
     expected:
         successes: 0
@@ -9,6 +9,10 @@ config:
         timeouts: 0
 
 steps:
+
+  - name: Sleep to ensure IPFS is ready
+    on_node: 1
+    cmd: sleep 5
 
     # Set up topology
     # ---------------
@@ -57,6 +61,11 @@ steps:
     - line: 0
       save_to: LANADDR4
 
+  - name: Check connections
+    on_node: 5
+    cmd: ipfs swarm peers
+    write_to_file: /dev/stdout
+
     ### Establish connections between all peers
 
   - name: Connect to node 1 from every other node
@@ -86,6 +95,11 @@ steps:
       - LANADDR4
     cmd: ipfs swarm connect $LANADDR4
 
+  - name: Check connections
+    on_node: 5
+    cmd: ipfs swarm peers
+    write_to_file: /dev/stdout
+
     # Test
     # ----
 
@@ -95,7 +109,7 @@ steps:
     on_node: 1
     cmd: "export DIR=/tmp/ipfs
        && rm -rf $DIR && mkdir $DIR
-       && for i in {1..10000}; do
+       && for i in {1..1000}; do
             head -c 100 /dev/urandom | base64 > $DIR/file$i.txt;
           done
        && ipfs add -rq $DIR | tail -n1 |  tee >(ipfs object links | wc -l)"
@@ -161,7 +175,7 @@ steps:
       - HASH
     cmd: "(time ipfs pin add $HASH && echo) &> /dev/stdout"
     timeout: 100
-    write_to_file: "bitswap-sessions/results/split_directory_exchange/raw-2_subsets-10000_blocks"
+    write_to_file: "bitswap-sessions/results/split_directory_exchange/sessions-2_subsets-1000_blocks"
 
     # Take stats
     # ----------
@@ -171,33 +185,33 @@ steps:
     cmd: "printf 'Node 1\n======\n\n'
        && ipfs stats bw
        && echo"
-    write_to_file: "bitswap-sessions/results/split_directory_exchange/raw-2_subsets-10000_blocks"
+    write_to_file: "bitswap-sessions/results/split_directory_exchange/sessions-2_subsets-1000_blocks"
 
   - name: All nodes output bandwidth stats
     on_node: 2
     cmd: "printf 'Node 2\n======\n\n'
        && ipfs stats bw
        && echo"
-    write_to_file: "bitswap-sessions/results/split_directory_exchange/raw-2_subsets-10000_blocks"
+    write_to_file: "bitswap-sessions/results/split_directory_exchange/sessions-2_subsets-1000_blocks"
 
   - name: All nodes output bandwidth stats
     on_node: 3
     cmd: "printf 'Node 3\n======\n\n'
        && ipfs stats bw
        && echo"
-    write_to_file: "bitswap-sessions/results/split_directory_exchange/raw-2_subsets-10000_blocks"
+    write_to_file: "bitswap-sessions/results/split_directory_exchange/sessions-2_subsets-1000_blocks"
 
   - name: All nodes output bandwidth stats
     on_node: 4
     cmd: "printf 'Node 4\n======\n\n'
        && ipfs stats bw
        && echo"
-    write_to_file: "bitswap-sessions/results/split_directory_exchange/raw-2_subsets-10000_blocks"
+    write_to_file: "bitswap-sessions/results/split_directory_exchange/sessions-2_subsets-1000_blocks"
 
   - name: All nodes output bandwidth stats
     on_node: 5
     cmd: "printf 'Node 5\n======\n\n'
        && ipfs stats bw
        && echo"
-    write_to_file: "bitswap-sessions/results/split_directory_exchange/raw-2_subsets-10000_blocks"
+    write_to_file: "bitswap-sessions/results/split_directory_exchange/sessions-2_subsets-1000_blocks"
 

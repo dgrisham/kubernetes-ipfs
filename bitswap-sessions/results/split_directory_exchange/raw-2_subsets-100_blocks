@@ -1,0 +1,102 @@
+pinned QmRw2TbJFGJmbbF31cg1zzj8nxymCgA5J1t43eE7j9nAWm recursively
+
+real	0m4.049s
+user	0m0.040s
+sys	0m0.016s
+
+Node 1
+======
+
+Bandwidth
+TotalIn: 5.1 MB
+TotalOut: 8.3 MB
+RateIn: 50 kB/s
+RateOut: 84 kB/s
+
+Node 2
+======
+
+Bandwidth
+TotalIn: 12 MB
+TotalOut: 17 MB
+RateIn: 74 kB/s
+RateOut: 97 kB/s
+
+Node 3
+======
+
+Bandwidth
+TotalIn: 12 MB
+TotalOut: 8.7 MB
+RateIn: 88 kB/s
+RateOut: 95 kB/s
+
+Node 4
+======
+
+Bandwidth
+TotalIn: 1.7 MB
+TotalOut: 1.6 MB
+RateIn: 13 kB/s
+RateOut: 12 kB/s
+
+Node 5
+======
+
+Bandwidth
+TotalIn: 9.9 MB
+TotalOut: 3.9 MB
+RateIn: 209 kB/s
+RateOut: 67 kB/s
+
+pinned QmQU2e4y5QF3C21E2eEFGuSY5ZfGsn15KPnVk8bAtJzrYe recursively
+
+real	0m0.246s
+user	0m0.052s
+sys	0m0.013s
+
+Node 1
+======
+
+Bandwidth
+TotalIn: 7.7 MB
+TotalOut: 8.4 MB
+RateIn: 4.2 kB/s
+RateOut: 4.9 kB/s
+
+Node 2
+======
+
+Bandwidth
+TotalIn: 8.5 MB
+TotalOut: 8.9 MB
+RateIn: 11 kB/s
+RateOut: 13 kB/s
+
+Node 3
+======
+
+Bandwidth
+TotalIn: 7.8 MB
+TotalOut: 8.2 MB
+RateIn: 10 kB/s
+RateOut: 10 kB/s
+
+Node 4
+======
+
+Bandwidth
+TotalIn: 4.9 MB
+TotalOut: 4.4 MB
+RateIn: 7.8 kB/s
+RateOut: 7.9 kB/s
+
+Node 5
+======
+
+Bandwidth
+TotalIn: 9.2 MB
+TotalOut: 8.0 MB
+RateIn: 63 kB/s
+RateOut: 57 kB/s
+

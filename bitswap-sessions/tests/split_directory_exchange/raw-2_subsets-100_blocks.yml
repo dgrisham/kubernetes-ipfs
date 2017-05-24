@@ -159,6 +159,45 @@ steps:
     on_node: 5
     inputs:
       - HASH
-    cmd: "ipfs pin add $HASH"
+    cmd: "(time ipfs pin add $HASH && echo) &> /dev/stdout"
     timeout: 100
-    write_to_file: /dev/stdout
+    write_to_file: "bitswap-sessions/results/split_directory_exchange/raw-2_subsets-100_blocks"
+
+    # Take stats
+    # ----------
+
+  - name: All nodes output bandwidth stats
+    on_node: 1
+    cmd: "printf 'Node 1\n======\n\n'
+       && ipfs stats bw
+       && echo"
+    write_to_file: "bitswap-sessions/results/split_directory_exchange/raw-2_subsets-100_blocks"
+
+  - name: All nodes output bandwidth stats
+    on_node: 2
+    cmd: "printf 'Node 2\n======\n\n'
+       && ipfs stats bw
+       && echo"
+    write_to_file: "bitswap-sessions/results/split_directory_exchange/raw-2_subsets-100_blocks"
+
+  - name: All nodes output bandwidth stats
+    on_node: 3
+    cmd: "printf 'Node 3\n======\n\n'
+       && ipfs stats bw
+       && echo"
+    write_to_file: "bitswap-sessions/results/split_directory_exchange/raw-2_subsets-100_blocks"
+
+  - name: All nodes output bandwidth stats
+    on_node: 4
+    cmd: "printf 'Node 4\n======\n\n'
+       && ipfs stats bw
+       && echo"
+    write_to_file: "bitswap-sessions/results/split_directory_exchange/raw-2_subsets-100_blocks"
+
+  - name: All nodes output bandwidth stats
+    on_node: 5
+    cmd: "printf 'Node 5\n======\n\n'
+       && ipfs stats bw
+       && echo"
+    write_to_file: "bitswap-sessions/results/split_directory_exchange/raw-2_subsets-100_blocks"
+

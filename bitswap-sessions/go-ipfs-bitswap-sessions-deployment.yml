@@ -1,0 +1,57 @@
+#apiVersion: extensions/v1beta1
+#kind: Deployment
+#metadata:
+  #name: go-ipfs-raw
+  #labels:
+    #name: go-ipfs-raw
+  #annotations:
+    #prometheus.io/scrape: "true"
+    #prometheus.io/port: "5001"
+    #prometheus.io/path: "debug/metrics/prometheus"
+#spec:
+  #replicas: 2
+  #template:
+    #metadata:
+      #labels:
+          #app: go-ipfs-raw
+    #spec:
+      #containers:
+      #- name: go-ipfs-raw
+        #image: "ipfs/go-ipfs:master"
+        #command: ["/usr/local/bin/start_ipfs"]
+        #ports:
+        #- containerPort: 4001
+          #name: "swarm"
+          #protocol: "TCP"
+        #- containerPort: 5001
+          #name: "api"
+          #protocol: "TCP"
+#---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: go-ipfs-bitswap-sessions
+  labels:
+      name: go-ipfs-bitswap-sessions
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "5001"
+    prometheus.io/path: "debug/metrics/prometheus"
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: go-ipfs-bitswap-sessions
+    spec:
+      containers:
+      - name: go-ipfs-bitswap-sessions
+        image: "dgrisham/bitswap-sessions"
+        command: ["/usr/local/bin/start_ipfs"]
+        ports:
+        - containerPort: 4001
+          name: "swarm"
+          protocol: "TCP"
+        - containerPort: 5001
+          name: "api"
+          protocol: "TCP"
