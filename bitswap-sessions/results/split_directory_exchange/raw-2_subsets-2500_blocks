@@ -20,25 +20,33 @@ TotalIn: 14 MB
 TotalOut: 16 MB
 RateIn: 69 kB/s
 RateOut: 82 kB/s
+
 ## ipfs stats bw --proto /ipfs/bitswap
+
 Bandwidth
 TotalIn: 0 B
 TotalOut: 0 B
 RateIn: 0 B/s
 RateOut: 0 B/s
+
 ## ipfs stats bw --proto /ipfs/bitswap/1.0.0
+
 Bandwidth
 TotalIn: 0 B
 TotalOut: 0 B
 RateIn: 0 B/s
 RateOut: 0 B/s
+
 ## ipfs stats bw --proto /ipfs/bitswap/1.1.0
+
 Bandwidth
 TotalIn: 252 kB
 TotalOut: 656 kB
 RateIn: 0 B/s
 RateOut: 16 B/s
+
 ## ipfs stats bw --proto /ipfs/kad/1.0.0
+
 Bandwidth
 TotalIn: 5.9 MB
 TotalOut: 6.0 MB
@@ -55,25 +63,33 @@ TotalIn: 12 MB
 TotalOut: 12 MB
 RateIn: 68 kB/s
 RateOut: 88 kB/s
+
 ## ipfs stats bw --proto /ipfs/bitswap
+
 Bandwidth
 TotalIn: 0 B
 TotalOut: 0 B
 RateIn: 0 B/s
 RateOut: 0 B/s
+
 ## ipfs stats bw --proto /ipfs/bitswap/1.0.0
+
 Bandwidth
 TotalIn: 0 B
 TotalOut: 0 B
 RateIn: 0 B/s
 RateOut: 0 B/s
+
 ## ipfs stats bw --proto /ipfs/bitswap/1.1.0
+
 Bandwidth
 TotalIn: 588 kB
 TotalOut: 750 kB
 RateIn: 3.7 kB/s
 RateOut: 335 B/s
+
 ## ipfs stats bw --proto /ipfs/kad/1.0.0
+
 Bandwidth
 TotalIn: 4.4 MB
 TotalOut: 4.2 MB
@@ -90,25 +106,33 @@ TotalIn: 12 MB
 TotalOut: 13 MB
 RateIn: 69 kB/s
 RateOut: 79 kB/s
+
 ## ipfs stats bw --proto /ipfs/bitswap
+
 Bandwidth
 TotalIn: 0 B
 TotalOut: 0 B
 RateIn: 0 B/s
 RateOut: 0 B/s
+
 ## ipfs stats bw --proto /ipfs/bitswap/1.0.0
+
 Bandwidth
 TotalIn: 0 B
 TotalOut: 0 B
 RateIn: 0 B/s
 RateOut: 0 B/s
+
 ## ipfs stats bw --proto /ipfs/bitswap/1.1.0
+
 Bandwidth
 TotalIn: 704 kB
 TotalOut: 887 kB
 RateIn: 1.6 kB/s
 RateOut: 3.4 kB/s
+
 ## ipfs stats bw --proto /ipfs/kad/1.0.0
+
 Bandwidth
 TotalIn: 4.5 MB
 TotalOut: 4.6 MB
@@ -125,25 +149,33 @@ TotalIn: 8.0 MB
 TotalOut: 7.5 MB
 RateIn: 57 kB/s
 RateOut: 50 kB/s
+
 ## ipfs stats bw --proto /ipfs/bitswap
+
 Bandwidth
 TotalIn: 0 B
 TotalOut: 0 B
 RateIn: 0 B/s
 RateOut: 0 B/s
+
 ## ipfs stats bw --proto /ipfs/bitswap/1.0.0
+
 Bandwidth
 TotalIn: 0 B
 TotalOut: 0 B
 RateIn: 0 B/s
 RateOut: 0 B/s
+
 ## ipfs stats bw --proto /ipfs/bitswap/1.1.0
+
 Bandwidth
 TotalIn: 483 kB
 TotalOut: 0 B
 RateIn: 1.0 kB/s
 RateOut: 0 B/s
+
 ## ipfs stats bw --proto /ipfs/kad/1.0.0
+
 Bandwidth
 TotalIn: 1.9 MB
 TotalOut: 4.4 MB
@@ -160,25 +192,33 @@ TotalIn: 18 MB
 TotalOut: 16 MB
 RateIn: 173 kB/s
 RateOut: 230 kB/s
+
 ## ipfs stats bw --proto /ipfs/bitswap
+
 Bandwidth
 TotalIn: 0 B
 TotalOut: 0 B
 RateIn: 0 B/s
 RateOut: 0 B/s
+
 ## ipfs stats bw --proto /ipfs/bitswap/1.0.0
+
 Bandwidth
 TotalIn: 0 B
 TotalOut: 0 B
 RateIn: 0 B/s
 RateOut: 0 B/s
+
 ## ipfs stats bw --proto /ipfs/bitswap/1.1.0
+
 Bandwidth
 TotalIn: 826 kB
 TotalOut: 921 kB
 RateIn: 680 B/s
 RateOut: 1.5 kB/s
+
 ## ipfs stats bw --proto /ipfs/kad/1.0.0
+
 Bandwidth
 TotalIn: 4.3 MB
 TotalOut: 5.2 MB

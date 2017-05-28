@@ -172,12 +172,16 @@ steps:
     cmd: "printf 'Node 1\n======\n\n'
        && echo '## ipfs stats bw\n'
        && ipfs stats bw
+       && echo
        && echo '## ipfs stats bw --proto /ipfs/bitswap'
        && ipfs stats bw --proto /ipfs/bitswap
+       && echo
        && echo '## ipfs stats bw --proto /ipfs/bitswap/1.0.0'
        && ipfs stats bw --proto /ipfs/bitswap/1.0.0
+       && echo
        && echo '## ipfs stats bw --proto /ipfs/bitswap/1.1.0'
        && ipfs stats bw --proto /ipfs/bitswap/1.1.0
+       && echo
        && echo '## ipfs stats bw --proto /ipfs/kad/1.0.0'
        && ipfs stats bw --proto /ipfs/kad/1.0.0
        && echo"
@@ -188,12 +192,16 @@ steps:
     cmd: "printf 'Node 2\n======\n\n'
        && echo '## ipfs stats bw\n'
        && ipfs stats bw
+       && echo
        && echo '## ipfs stats bw --proto /ipfs/bitswap'
        && ipfs stats bw --proto /ipfs/bitswap
+       && echo
        && echo '## ipfs stats bw --proto /ipfs/bitswap/1.0.0'
        && ipfs stats bw --proto /ipfs/bitswap/1.0.0
+       && echo
        && echo '## ipfs stats bw --proto /ipfs/bitswap/1.1.0'
        && ipfs stats bw --proto /ipfs/bitswap/1.1.0
+       && echo
        && echo '## ipfs stats bw --proto /ipfs/kad/1.0.0'
        && ipfs stats bw --proto /ipfs/kad/1.0.0
        && echo"
@@ -204,12 +212,16 @@ steps:
     cmd: "printf 'Node 3\n======\n\n'
        && echo '## ipfs stats bw\n'
        && ipfs stats bw
+       && echo
        && echo '## ipfs stats bw --proto /ipfs/bitswap'
        && ipfs stats bw --proto /ipfs/bitswap
+       && echo
        && echo '## ipfs stats bw --proto /ipfs/bitswap/1.0.0'
        && ipfs stats bw --proto /ipfs/bitswap/1.0.0
+       && echo
        && echo '## ipfs stats bw --proto /ipfs/bitswap/1.1.0'
        && ipfs stats bw --proto /ipfs/bitswap/1.1.0
+       && echo
        && echo '## ipfs stats bw --proto /ipfs/kad/1.0.0'
        && ipfs stats bw --proto /ipfs/kad/1.0.0
        && echo"
@@ -220,12 +232,16 @@ steps:
     cmd: "printf 'Node 4\n======\n\n'
        && echo '## ipfs stats bw\n'
        && ipfs stats bw
+       && echo
        && echo '## ipfs stats bw --proto /ipfs/bitswap'
        && ipfs stats bw --proto /ipfs/bitswap
+       && echo
        && echo '## ipfs stats bw --proto /ipfs/bitswap/1.0.0'
        && ipfs stats bw --proto /ipfs/bitswap/1.0.0
+       && echo
        && echo '## ipfs stats bw --proto /ipfs/bitswap/1.1.0'
        && ipfs stats bw --proto /ipfs/bitswap/1.1.0
+       && echo
        && echo '## ipfs stats bw --proto /ipfs/kad/1.0.0'
        && ipfs stats bw --proto /ipfs/kad/1.0.0
        && echo"
@@ -236,12 +252,16 @@ steps:
     cmd: "printf 'Node 5\n======\n\n'
        && echo '## ipfs stats bw\n'
        && ipfs stats bw
+       && echo
        && echo '## ipfs stats bw --proto /ipfs/bitswap'
        && ipfs stats bw --proto /ipfs/bitswap
+       && echo
        && echo '## ipfs stats bw --proto /ipfs/bitswap/1.0.0'
        && ipfs stats bw --proto /ipfs/bitswap/1.0.0
+       && echo
        && echo '## ipfs stats bw --proto /ipfs/bitswap/1.1.0'
        && ipfs stats bw --proto /ipfs/bitswap/1.1.0
+       && echo
        && echo '## ipfs stats bw --proto /ipfs/kad/1.0.0'
        && ipfs stats bw --proto /ipfs/kad/1.0.0
        && echo"
