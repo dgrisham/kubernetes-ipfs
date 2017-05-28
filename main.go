@@ -25,9 +25,7 @@ import (
 // DEBUG decides if we should have debug output enabled or not
 var DEBUG = false
 
-var DEPLOYMENT_NAME = "go-ipfs-bitswap-sessions"
-
-//var DEPLOYMENT_NAME = "go-ipfs-raw"
+var DEPLOYMENT_NAME = "go-ipfs-stress"
 
 const (
 	random     = "RANDOM"

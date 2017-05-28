@@ -1,0 +1,187 @@
+Node 1: go-ipfs-raw-4095230678-0586k
+Node 2: go-ipfs-raw-4095230678-4gk6k
+Node 3: go-ipfs-raw-4095230678-bsf12
+Node 4: go-ipfs-raw-4095230678-chzd6
+Node 5: go-ipfs-raw-4095230678-d03qr
+
+pinned QmPq6GiGW9xs1b7BiC5D9qpkffTcdRmZ5cxJgWeVe77ami recursively
+
+real	0m6.365s
+user	0m0.031s
+sys	0m0.014s
+
+Node 1
+======
+
+## ipfs stats bw
+
+Bandwidth
+TotalIn: 14 MB
+TotalOut: 16 MB
+RateIn: 69 kB/s
+RateOut: 82 kB/s
+## ipfs stats bw --proto /ipfs/bitswap
+Bandwidth
+TotalIn: 0 B
+TotalOut: 0 B
+RateIn: 0 B/s
+RateOut: 0 B/s
+## ipfs stats bw --proto /ipfs/bitswap/1.0.0
+Bandwidth
+TotalIn: 0 B
+TotalOut: 0 B
+RateIn: 0 B/s
+RateOut: 0 B/s
+## ipfs stats bw --proto /ipfs/bitswap/1.1.0
+Bandwidth
+TotalIn: 252 kB
+TotalOut: 656 kB
+RateIn: 0 B/s
+RateOut: 16 B/s
+## ipfs stats bw --proto /ipfs/kad/1.0.0
+Bandwidth
+TotalIn: 5.9 MB
+TotalOut: 6.0 MB
+RateIn: 9.1 kB/s
+RateOut: 41 kB/s
+
+Node 2
+======
+
+## ipfs stats bw
+
+Bandwidth
+TotalIn: 12 MB
+TotalOut: 12 MB
+RateIn: 68 kB/s
+RateOut: 88 kB/s
+## ipfs stats bw --proto /ipfs/bitswap
+Bandwidth
+TotalIn: 0 B
+TotalOut: 0 B
+RateIn: 0 B/s
+RateOut: 0 B/s
+## ipfs stats bw --proto /ipfs/bitswap/1.0.0
+Bandwidth
+TotalIn: 0 B
+TotalOut: 0 B
+RateIn: 0 B/s
+RateOut: 0 B/s
+## ipfs stats bw --proto /ipfs/bitswap/1.1.0
+Bandwidth
+TotalIn: 588 kB
+TotalOut: 750 kB
+RateIn: 3.7 kB/s
+RateOut: 335 B/s
+## ipfs stats bw --proto /ipfs/kad/1.0.0
+Bandwidth
+TotalIn: 4.4 MB
+TotalOut: 4.2 MB
+RateIn: 13 kB/s
+RateOut: 46 kB/s
+
+Node 3
+======
+
+## ipfs stats bw
+
+Bandwidth
+TotalIn: 12 MB
+TotalOut: 13 MB
+RateIn: 69 kB/s
+RateOut: 79 kB/s
+## ipfs stats bw --proto /ipfs/bitswap
+Bandwidth
+TotalIn: 0 B
+TotalOut: 0 B
+RateIn: 0 B/s
+RateOut: 0 B/s
+## ipfs stats bw --proto /ipfs/bitswap/1.0.0
+Bandwidth
+TotalIn: 0 B
+TotalOut: 0 B
+RateIn: 0 B/s
+RateOut: 0 B/s
+## ipfs stats bw --proto /ipfs/bitswap/1.1.0
+Bandwidth
+TotalIn: 704 kB
+TotalOut: 887 kB
+RateIn: 1.6 kB/s
+RateOut: 3.4 kB/s
+## ipfs stats bw --proto /ipfs/kad/1.0.0
+Bandwidth
+TotalIn: 4.5 MB
+TotalOut: 4.6 MB
+RateIn: 17 kB/s
+RateOut: 38 kB/s
+
+Node 4
+======
+
+## ipfs stats bw
+
+Bandwidth
+TotalIn: 8.0 MB
+TotalOut: 7.5 MB
+RateIn: 57 kB/s
+RateOut: 50 kB/s
+## ipfs stats bw --proto /ipfs/bitswap
+Bandwidth
+TotalIn: 0 B
+TotalOut: 0 B
+RateIn: 0 B/s
+RateOut: 0 B/s
+## ipfs stats bw --proto /ipfs/bitswap/1.0.0
+Bandwidth
+TotalIn: 0 B
+TotalOut: 0 B
+RateIn: 0 B/s
+RateOut: 0 B/s
+## ipfs stats bw --proto /ipfs/bitswap/1.1.0
+Bandwidth
+TotalIn: 483 kB
+TotalOut: 0 B
+RateIn: 1.0 kB/s
+RateOut: 0 B/s
+## ipfs stats bw --proto /ipfs/kad/1.0.0
+Bandwidth
+TotalIn: 1.9 MB
+TotalOut: 4.4 MB
+RateIn: 18 kB/s
+RateOut: 29 kB/s
+
+Node 5
+======
+
+## ipfs stats bw
+
+Bandwidth
+TotalIn: 18 MB
+TotalOut: 16 MB
+RateIn: 173 kB/s
+RateOut: 230 kB/s
+## ipfs stats bw --proto /ipfs/bitswap
+Bandwidth
+TotalIn: 0 B
+TotalOut: 0 B
+RateIn: 0 B/s
+RateOut: 0 B/s
+## ipfs stats bw --proto /ipfs/bitswap/1.0.0
+Bandwidth
+TotalIn: 0 B
+TotalOut: 0 B
+RateIn: 0 B/s
+RateOut: 0 B/s
+## ipfs stats bw --proto /ipfs/bitswap/1.1.0
+Bandwidth
+TotalIn: 826 kB
+TotalOut: 921 kB
+RateIn: 680 B/s
+RateOut: 1.5 kB/s
+## ipfs stats bw --proto /ipfs/kad/1.0.0
+Bandwidth
+TotalIn: 4.3 MB
+TotalOut: 5.2 MB
+RateIn: 88 kB/s
+RateOut: 78 kB/s
+

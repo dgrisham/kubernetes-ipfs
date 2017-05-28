@@ -3,16 +3,13 @@ config:
     nodes: 5
     selector: app=go-ipfs-raw
     times: 1
+    write_node_map: "bitswap-sessions/results/split_directory_exchange/raw-2_subsets-%{NUM_BLOCKS}_blocks"
     expected:
         successes: 0
         failures: 0
         timeouts: 0
 
 steps:
-
-  - name: Sleep to ensure IPFS is ready
-    on_node: 1
-    cmd: sleep 5
 
     # Set up topology
     # ---------------
@@ -30,11 +27,6 @@ steps:
     end_node: 5
     cmd: for node in $(ipfs swarm peers); do ipfs swarm disconnect $node; done;
     timeout: 0
-
-  - name: Check that there are no connections
-    on_node: 5
-    cmd: ipfs swarm peers
-    write_to_file: /dev/stdout
 
     ### Get LAN addrs
 
@@ -95,11 +87,6 @@ steps:
       - LANADDR4
     cmd: ipfs swarm connect $LANADDR4
 
-  - name: Check connections
-    on_node: 5
-    cmd: ipfs swarm peers
-    write_to_file: /dev/stdout
-
     # Test
     # ----
 
@@ -109,7 +96,7 @@ steps:
     on_node: 1
     cmd: "export DIR=/tmp/ipfs
        && rm -rf $DIR && mkdir $DIR
-       && for i in {1..1000}; do
+       && for i in {1..%{NUM_BLOCKS}}; do
             head -c 100 /dev/urandom | base64 > $DIR/file$i.txt;
           done
        && ipfs add -rq $DIR | tail -n1 |  tee >(ipfs object links | wc -l)"
@@ -175,7 +162,7 @@ steps:
       - HASH
     cmd: "(time ipfs pin add $HASH && echo) &> /dev/stdout"
     timeout: 100
-    write_to_file: "bitswap-sessions/results/split_directory_exchange/raw-2_subsets-1000_blocks"
+    write_to_file: "bitswap-sessions/results/split_directory_exchange/raw-2_subsets-%{NUM_BLOCKS}_blocks"
 
     # Take stats
     # ----------
@@ -183,35 +170,80 @@ steps:
   - name: All nodes output bandwidth stats
     on_node: 1
     cmd: "printf 'Node 1\n======\n\n'
+       && echo '## ipfs stats bw\n'
        && ipfs stats bw
+       && echo '## ipfs stats bw --proto /ipfs/bitswap'
+       && ipfs stats bw --proto /ipfs/bitswap
+       && echo '## ipfs stats bw --proto /ipfs/bitswap/1.0.0'
+       && ipfs stats bw --proto /ipfs/bitswap/1.0.0
+       && echo '## ipfs stats bw --proto /ipfs/bitswap/1.1.0'
+       && ipfs stats bw --proto /ipfs/bitswap/1.1.0
+       && echo '## ipfs stats bw --proto /ipfs/kad/1.0.0'
+       && ipfs stats bw --proto /ipfs/kad/1.0.0
        && echo"
-    write_to_file: "bitswap-sessions/results/split_directory_exchange/raw-2_subsets-1000_blocks"
+    write_to_file: "bitswap-sessions/results/split_directory_exchange/raw-2_subsets-%{NUM_BLOCKS}_blocks"
 
   - name: All nodes output bandwidth stats
     on_node: 2
     cmd: "printf 'Node 2\n======\n\n'
+       && echo '## ipfs stats bw\n'
        && ipfs stats bw
+       && echo '## ipfs stats bw --proto /ipfs/bitswap'
+       && ipfs stats bw --proto /ipfs/bitswap
+       && echo '## ipfs stats bw --proto /ipfs/bitswap/1.0.0'
+       && ipfs stats bw --proto /ipfs/bitswap/1.0.0
+       && echo '## ipfs stats bw --proto /ipfs/bitswap/1.1.0'
+       && ipfs stats bw --proto /ipfs/bitswap/1.1.0
+       && echo '## ipfs stats bw --proto /ipfs/kad/1.0.0'
+       && ipfs stats bw --proto /ipfs/kad/1.0.0
        && echo"
-    write_to_file: "bitswap-sessions/results/split_directory_exchange/raw-2_subsets-1000_blocks"
+    write_to_file: "bitswap-sessions/results/split_directory_exchange/raw-2_subsets-%{NUM_BLOCKS}_blocks"
 
   - name: All nodes output bandwidth stats
     on_node: 3
     cmd: "printf 'Node 3\n======\n\n'
+       && echo '## ipfs stats bw\n'
        && ipfs stats bw
+       && echo '## ipfs stats bw --proto /ipfs/bitswap'
+       && ipfs stats bw --proto /ipfs/bitswap
+       && echo '## ipfs stats bw --proto /ipfs/bitswap/1.0.0'
+       && ipfs stats bw --proto /ipfs/bitswap/1.0.0
+       && echo '## ipfs stats bw --proto /ipfs/bitswap/1.1.0'
+       && ipfs stats bw --proto /ipfs/bitswap/1.1.0
+       && echo '## ipfs stats bw --proto /ipfs/kad/1.0.0'
+       && ipfs stats bw --proto /ipfs/kad/1.0.0
        && echo"
-    write_to_file: "bitswap-sessions/results/split_directory_exchange/raw-2_subsets-1000_blocks"
+    write_to_file: "bitswap-sessions/results/split_directory_exchange/raw-2_subsets-%{NUM_BLOCKS}_blocks"
 
   - name: All nodes output bandwidth stats
     on_node: 4
     cmd: "printf 'Node 4\n======\n\n'
+       && echo '## ipfs stats bw\n'
        && ipfs stats bw
+       && echo '## ipfs stats bw --proto /ipfs/bitswap'
+       && ipfs stats bw --proto /ipfs/bitswap
+       && echo '## ipfs stats bw --proto /ipfs/bitswap/1.0.0'
+       && ipfs stats bw --proto /ipfs/bitswap/1.0.0
+       && echo '## ipfs stats bw --proto /ipfs/bitswap/1.1.0'
+       && ipfs stats bw --proto /ipfs/bitswap/1.1.0
+       && echo '## ipfs stats bw --proto /ipfs/kad/1.0.0'
+       && ipfs stats bw --proto /ipfs/kad/1.0.0
        && echo"
-    write_to_file: "bitswap-sessions/results/split_directory_exchange/raw-2_subsets-1000_blocks"
+    write_to_file: "bitswap-sessions/results/split_directory_exchange/raw-2_subsets-%{NUM_BLOCKS}_blocks"
 
   - name: All nodes output bandwidth stats
     on_node: 5
     cmd: "printf 'Node 5\n======\n\n'
+       && echo '## ipfs stats bw\n'
        && ipfs stats bw
+       && echo '## ipfs stats bw --proto /ipfs/bitswap'
+       && ipfs stats bw --proto /ipfs/bitswap
+       && echo '## ipfs stats bw --proto /ipfs/bitswap/1.0.0'
+       && ipfs stats bw --proto /ipfs/bitswap/1.0.0
+       && echo '## ipfs stats bw --proto /ipfs/bitswap/1.1.0'
+       && ipfs stats bw --proto /ipfs/bitswap/1.1.0
+       && echo '## ipfs stats bw --proto /ipfs/kad/1.0.0'
+       && ipfs stats bw --proto /ipfs/kad/1.0.0
        && echo"
-    write_to_file: "bitswap-sessions/results/split_directory_exchange/raw-2_subsets-1000_blocks"
+    write_to_file: "bitswap-sessions/results/split_directory_exchange/raw-2_subsets-%{NUM_BLOCKS}_blocks"
 
