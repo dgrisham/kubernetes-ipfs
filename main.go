@@ -26,6 +26,7 @@ import (
 var DEBUG = false
 
 var DEPLOYMENT_NAME = "go-ipfs-bitswap-sessions"
+
 //var DEPLOYMENT_NAME = "go-ipfs-raw"
 
 const (
