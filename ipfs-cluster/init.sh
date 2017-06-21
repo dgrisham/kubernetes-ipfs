@@ -2,12 +2,15 @@
 
 set -e
 
+num_peers="$1"
+[[ -z "$num_peers" ]] && num_peers=5
+
 # echo "Create Monitoring"
 kubectl create -f ./prometheus-manifests.yml
 
 echo
 echo "Create go-ipfs deployment"
-kubectl create -f ./ipfs-cluster-deployment.yml
+kubectl create -f <(sed -e "s/replicas: 5/replicas: $num_peers/" ./ipfs-cluster-deployment.yml)
 
 sleep 2
 
